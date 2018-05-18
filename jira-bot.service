@@ -1,0 +1,18 @@
+[Unit]
+Description=Zabbix bot interface
+After=syslog.target
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/tmp/zabbix-bot.pid
+WorkingDirectory=/home/nonrootuser/zabbix-telegram-bot
+User=nonrootuser
+Group=nonrootuser
+OOMScoreAdjust=-100
+ExecStart=./report-bot.py
+ExecStop=/bin/kill -9 `cat $PIDFile`
+
+[Install]
+WantedBy=multi-user.target
+
